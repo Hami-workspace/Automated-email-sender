@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - Automate with Hami</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .auth-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-main);
+            position: relative;
+            overflow: hidden;
+            padding: 2rem 0;
+        }
+
+        .auth-bg-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 80vw;
+            height: 80vw;
+            background: radial-gradient(circle, rgba(99,102,241,0.1) 0%, rgba(10,10,13,0) 60%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .auth-card {
+            background: var(--bg-glass);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid var(--border-light);
+            border-radius: 24px;
+            padding: 3rem;
+            width: 100%;
+            max-width: 500px;
+            z-index: 1;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5);
+        }
+
+        .auth-card .logo {
+            display: block;
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.8rem;
+        }
+
+        .auth-header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        .auth-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .auth-header p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            flex: 1;
+        }
+
+        .form-label {
+            display: block;
+            font-family: var(--font-heading);
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            color: var(--text-primary);
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 0.8rem 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-light);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: var(--font-body);
+            transition: border-color var(--transition-fast), background var(--transition-fast);
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--accent-primary);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 3px var(--accent-glow);
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+            cursor: pointer;
+            color: var(--text-secondary);
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+        }
+
+        .checkbox-label a {
+            color: var(--accent-primary);
+        }
+
+        .auth-footer {
+            margin-top: 2rem;
+            text-align: center;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+
+        .auth-footer a {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="auth-container fade-in appear">
+        <div class="auth-bg-glow"></div>
+        <div class="auth-card">
+            <a href="index.html" class="logo">Automate<span class="highlight">with</span>Hami</a>
+            
+            <div class="auth-header">
+                <h2>Create your account</h2>
+                <p>Start automating your dispatches today.</p>
+            </div>
+
+            <form id="registerForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label" for="fname">First Name</label>
+                        <input type="text" id="fname" class="form-control" placeholder="John" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label" for="lname">Last Name</label>
+                        <input type="text" id="lname" class="form-control" placeholder="Doe" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="company">Company Name</label>
+                    <input type="text" id="company" class="form-control" placeholder="Logistics Inc.">
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="email">Work Email</label>
+                    <input type="email" id="email" class="form-control" placeholder="dispatch@example.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label" for="password">Create Password</label>
+                    <input type="password" id="password" class="form-control" placeholder="••••••••" required>
+                </div>
+
+                <label class="checkbox-label">
+                    <input type="checkbox" required style="margin-top: 3px;"> 
+                    <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a> of Automate with Hami.</span>
+                </label>
+
+                <button type="submit" class="btn btn-primary w-100">Create Account</button>
+            </form>
+
+            <script>
+                document.getElementById('registerForm').addEventListener('submit', async function(e) {
+                    e.preventDefault();
+                    
+                    const firstName = document.getElementById('fname').value;
+                    const lastName = document.getElementById('lname').value;
+                    const companyName = document.getElementById('company').value;
+                    const email = document.getElementById('email').value;
+                    const password = document.getElementById('password').value;
+                    
+                    const btn = this.querySelector('button[type="submit"]');
+                    btn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Creating...';
+                    
+                    try {
+                        const res = await fetch('http://localhost:3000/api/auth/register', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({ firstName, lastName, companyName, email, password })
+                        });
+                        const data = await res.json();
+                        
+                        if (data.success) {
+                            alert('Account created successfully! Please log in.');
+                            window.location.href = 'login.html';
+                        } else {
+                            alert(data.error || 'Registration failed');
+                            btn.innerHTML = 'Create Account';
+                        }
+                    } catch (err) {
+                        alert('Could not connect to server.');
+                        btn.innerHTML = 'Create Account';
+                    }
+                });
+            </script>
+
+            <div class="auth-footer">
+                Already have an account? <a href="login.html">Sign In</a>
+            </div>
+        </div>
+    </div>
+    <script src="js/cursor.js"></script>
+</body>
+</html>

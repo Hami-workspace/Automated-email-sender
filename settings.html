@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Automate with Hami</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body class="dashboard-body">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <a href="index.html" class="logo text-gradient">Automate with Hami</a>
+            <i class="fa-solid fa-bars" id="sidebarToggle" style="cursor: pointer; color: var(--text-secondary);"></i>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <i class="fa-solid fa-house"></i> <span>Overview</span>
+            </a>
+            <a href="campaigns.html" class="nav-item">
+                <i class="fa-solid fa-paper-plane"></i> <span>Campaigns</span>
+            </a>
+            <a href="accounts.html" class="nav-item">
+                <i class="fa-solid fa-envelope"></i> <span>Email Accounts</span>
+            </a>
+            <a href="leads.html" class="nav-item">
+                <i class="fa-solid fa-database"></i> <span>Built-in Leads</span>
+            </a>
+            <a href="analytics.html" class="nav-item">
+                <i class="fa-solid fa-chart-simple"></i> <span>Analytics</span>
+            </a>
+            <a href="settings.html" class="nav-item active">
+                <i class="fa-solid fa-gear"></i> <span>Settings</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="profile-avatar">AH</div>
+                <div class="profile-info">
+                    <h4>Admin User</h4>
+                    <span>admin@automatehq.com</span>
+                </div>
+                <a href="login.html" style="margin-left: auto; color: var(--text-secondary);"><i class="fa-solid fa-right-from-bracket"></i></a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-wrapper">
+        <!-- Top Header -->
+        <header class="top-header" style="justify-content: flex-end;">            
+            <div class="header-actions" style="position: relative;">
+                <button class="btn btn-primary" onclick="window.location.href='campaigns.html'"><i class="fa-solid fa-plus"></i> New Campaign</button>
+                <button class="notification-btn" id="notificationBtn">
+                    <i class="fa-solid fa-bell"></i>
+                    <span class="notification-badge" id="notificationBadge" style="display: none;">0</span>
+                </button>
+                <div id="notificationDropdown" style="display: none; position: absolute; right: 0; top: 120%; width: 300px; background: var(--bg-secondary); border: 1px solid var(--border-light); border-radius: 12px; padding: 1rem; box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 50;">
+                    <h4 style="margin-bottom: 0.8rem; font-size: 0.95rem; border-bottom: 1px solid var(--border-light); padding-bottom: 0.5rem;">Notifications</h4>
+                    <div id="notificationList" style="max-height: 250px; overflow-y: auto; font-size: 0.85rem; color: var(--text-secondary);">
+                        <div style="padding: 0.5rem; border-bottom: 1px solid var(--border-light);">No new notifications.</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Settings View -->
+        <div class="main-content fade-in appear">
+            <div class="page-header">
+                <div class="page-title">
+                    <h1>Engine Settings</h1>
+                    <p>Global architectural constraints and rotation algorithms.</p>
+                </div>
+            </div>
+
+            <div class="panel" style="max-width: 600px;">
+                <div class="panel-header">
+                    <h3>Account Defaults</h3>
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label style="display: block; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.5rem;">Global Daily Sending Limit (Per Node)</label>
+                    <input type="number" id="setting_dailyLimit" class="form-control" style="width: 100%; padding: 0.8rem; background: var(--bg-main); border: 1px solid var(--border-hover); border-radius: 8px; color: var(--text-primary);" value="150">
+                    <small style="color: var(--text-secondary); display: block; margin-top: 0.5rem; font-size: 0.75rem;">Protects nodes from spam filters. Hard throttle threshold.</small>
+                </div>
+                
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label style="display: block; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.5rem;">Default Action Delay (Seconds)</label>
+                    <input type="number" id="setting_defaultDelay" class="form-control" style="width: 100%; padding: 0.8rem; background: var(--bg-main); border: 1px solid var(--border-hover); border-radius: 8px; color: var(--text-primary);" value="60">
+                    <small style="color: var(--text-secondary); display: block; margin-top: 0.5rem; font-size: 0.75rem;">Default amount of seconds to wait before rotating through sequence queue.</small>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 2rem;">
+                    <label style="display: block; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.5rem;">Timezone Strategy</label>
+                    <select id="setting_timezone" class="form-control" style="width: 100%; padding: 0.8rem; background: var(--bg-main); border: 1px solid var(--border-hover); border-radius: 8px; color: var(--text-primary);">
+                        <option value="EST">EST (Eastern Standard Time)</option>
+                        <option value="CST">CST (Central Standard Time)</option>
+                        <option value="PST">PST (Pacific Standard Time)</option>
+                    </select>
+                </div>
+
+                <button class="btn btn-primary w-100" id="saveSettingsBtn"><i class="fa-solid fa-floppy-disk"></i> Save Constraints</button>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/dashboard.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/cursor.js"></script>
+</body>
+</html>

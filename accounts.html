@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Accounts - Automate with Hami</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+<body class="dashboard-body">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <a href="index.html" class="logo text-gradient">Automate with Hami</a>
+            <i class="fa-solid fa-bars" id="sidebarToggle" style="cursor: pointer; color: var(--text-secondary);"></i>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <i class="fa-solid fa-house"></i> <span>Overview</span>
+            </a>
+            <a href="campaigns.html" class="nav-item">
+                <i class="fa-solid fa-paper-plane"></i> <span>Campaigns</span>
+            </a>
+            <a href="accounts.html" class="nav-item active">
+                <i class="fa-solid fa-envelope"></i> <span>Email Accounts</span>
+            </a>
+            <a href="analytics.html" class="nav-item">
+                <i class="fa-solid fa-chart-simple"></i> <span>Analytics</span>
+            </a>
+            <a href="settings.html" class="nav-item">
+                <i class="fa-solid fa-gear"></i> <span>Settings</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="profile-avatar">AH</div>
+                <div class="profile-info">
+                    <h4>Admin User</h4>
+                    <span>admin@automatehq.com</span>
+                </div>
+                <a href="login.html" style="margin-left: auto; color: var(--text-secondary);"><i class="fa-solid fa-right-from-bracket"></i></a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-wrapper">
+        <header class="top-header">
+            <div class="header-search">
+                <i class="fa-solid fa-search"></i>
+                <input type="text" placeholder="Search accounts...">
+            </div>
+            
+            <div class="header-actions">
+                <button class="btn btn-primary" id="addAccountBtn"><i class="fa-solid fa-plus"></i> Add Accounts</button>
+            </div>
+        </header>
+
+        <div class="main-content fade-in appear">
+            <div class="page-header">
+                <div class="page-title">
+                    <h1>Connected Accounts</h1>
+                    <p>Manage inboxes, view deliverability, and configure Auto Warmup.</p>
+                </div>
+            </div>
+
+            <!-- Dashboard View -->
+            <div class="accounts-grid">
+                <!-- Data is loaded dynamically via js/dashboard.js -->
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal for Adding Account -->
+    <div class="modal-overlay" id="accountModal">
+        <div class="modal-box">
+            <div class="modal-header">
+                <h3>Connect New Email Account</h3>
+                <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body">
+                <p style="margin-bottom: 2rem; color: var(--text-secondary);">Link your inbox via App Passwords. Host and Port will auto-complete for Google/Outlook.</p>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; color: var(--text-secondary);">Email Address</label>
+                    <input type="email" id="accEmail" class="form-control" placeholder="sales@yourdomain.com" style="width: 100%; padding: 0.8rem; background: var(--bg-main); border: 1px solid var(--border-hover); border-radius: 8px; color: var(--text-primary);">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; color: var(--text-secondary);">App Password</label>
+                    <input type="password" id="accPass" class="form-control" placeholder="16-digit-app-password" style="width: 100%; padding: 0.8rem; background: var(--bg-main); border: 1px solid var(--border-hover); border-radius: 8px; color: var(--text-primary);">
+                </div>
+
+                <div style="display: flex; gap: 1rem; margin-bottom: 1.5rem;">
+                    <div class="form-group" style="flex: 2;">
+                        <label style="display: block; margin-bottom: 0.5rem; color: var(--text-secondary);">SMTP Host</label>
+                        <input type="text" id="accHost" class="form-control" value="smtp.gmail.com" style="width: 100%; padding: 0.8rem; background: var(--bg-main); border: 1px solid var(--border-hover); border-radius: 8px; color: var(--text-primary);">
+                    </div>
+                    <div class="form-group" style="flex: 1;">
+                        <label style="display: block; margin-bottom: 0.5rem; color: var(--text-secondary);">Port</label>
+                        <input type="number" id="accPort" class="form-control" value="465" style="width: 100%; padding: 0.8rem; background: var(--bg-main); border: 1px solid var(--border-hover); border-radius: 8px; color: var(--text-primary);">
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-ghost close-modal-btn">Cancel</button>
+                <button class="btn btn-primary" id="submitNewAccount">Connect Account</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/dashboard.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/cursor.js"></script>
+</body>
+</html>

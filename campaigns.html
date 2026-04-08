@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campaigns - Automate with Hami</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <style>
+        .campaigns-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            background: var(--bg-secondary);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-light);
+        }
+    </style>
+</head>
+<body class="dashboard-body">
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <a href="index.html" class="logo text-gradient">Automate with Hami</a>
+            <i class="fa-solid fa-bars" id="sidebarToggle" style="cursor: pointer; color: var(--text-secondary);"></i>
+        </div>
+        
+        <nav class="sidebar-nav">
+            <a href="dashboard.html" class="nav-item">
+                <i class="fa-solid fa-house"></i> <span>Overview</span>
+            </a>
+            <a href="campaigns.html" class="nav-item active">
+                <i class="fa-solid fa-paper-plane"></i> <span>Campaigns</span>
+            </a>
+            <a href="accounts.html" class="nav-item">
+                <i class="fa-solid fa-envelope"></i> <span>Email Accounts</span>
+            </a>
+            <a href="analytics.html" class="nav-item">
+                <i class="fa-solid fa-chart-simple"></i> <span>Analytics</span>
+            </a>
+            <a href="settings.html" class="nav-item">
+                <i class="fa-solid fa-gear"></i> <span>Settings</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-footer">
+            <div class="user-profile">
+                <div class="profile-avatar">AH</div>
+                <div class="profile-info">
+                    <h4>Admin User</h4>
+                    <span>admin@automatehq.com</span>
+                </div>
+                <a href="login.html" style="margin-left: auto; color: var(--text-secondary);"><i class="fa-solid fa-right-from-bracket"></i></a>
+            </div>
+        </div>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="main-wrapper">
+        <header class="top-header" style="justify-content: flex-end;">
+            
+            <div class="header-actions" style="position: relative;">
+                <button class="notification-btn" id="notificationBtn">
+                    <i class="fa-solid fa-bell"></i>
+                    <span class="notification-badge" id="notificationBadge" style="display: none;">0</span>
+                </button>
+                <div id="notificationDropdown" style="display: none; position: absolute; right: 0; top: 120%; width: 300px; background: var(--bg-secondary); border: 1px solid var(--border-light); border-radius: 12px; padding: 1rem; box-shadow: 0 10px 30px rgba(0,0,0,0.5); z-index: 50;">
+                    <h4 style="margin-bottom: 0.8rem; font-size: 0.95rem; border-bottom: 1px solid var(--border-light); padding-bottom: 0.5rem;">Notifications</h4>
+                    <div id="notificationList" style="max-height: 250px; overflow-y: auto; font-size: 0.85rem; color: var(--text-secondary);">
+                        <div style="padding: 0.5rem; border-bottom: 1px solid var(--border-light);">No new notifications.</div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <div class="main-content fade-in appear">
+            <div class="page-header">
+                <div class="page-title">
+                    <h1>Campaigns Manager</h1>
+                    <p>Build sequences, select sending accounts, and launch bulk outreach.</p>
+                </div>
+            </div>
+
+            <div class="campaigns-top">
+                <div style="display: flex; gap: 1rem;">
+                    <div class="dash-card" style="padding: 1rem 1.5rem; min-width: 200px;">
+                        <span class="card-title">Total Active</span>
+                        <div class="card-value" id="totalActiveCount" style="font-size: 1.8rem;">0</div>
+                    </div>
+                    <div class="dash-card" style="padding: 1rem 1.5rem; min-width: 200px;">
+                        <span class="card-title">Completed</span>
+                        <div class="card-value" id="totalCompletedCount" style="font-size: 1.8rem;">0</div>
+                    </div>
+                </div>
+                <button class="btn btn-primary" id="addCampaignBtn"><i class="fa-solid fa-paper-plane"></i> Create New Campaign</button>
+            </div>
+
+            <div class="panel">
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Campaign Name</th>
+                            <th>Status</th>
+                            <th>Target List</th>
+                            <th>Sent</th>
+                            <th>Open Rate</th>
+                            <th>Reply Rate</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <strong>Flatbed Carriers - Texas</strong><br>
+                                <span style="font-size: 0.8rem; color: var(--text-secondary);">3 Steps (Drip)</span>
+                            </td>
+                            <td><span class="status-badge status-active">Running</span></td>
+                            <td>TX Carriers List (1,500)</td>
+                            <td>1,240</td>
+                            <td class="text-green">55.0%</td>
+                            <td class="text-green">3.4%</td>
+                            <td>
+                                <button class="btn btn-ghost"><i class="fa-solid fa-pause"></i></button>
+                                <button class="btn btn-ghost"><i class="fa-solid fa-pen"></i></button>
+                                <button class="btn btn-ghost text-red"><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Dry Van Outreach - Midwest</strong><br>
+                                <span style="font-size: 0.8rem; color: var(--text-secondary);">1 Step</span>
+                            </td>
+                            <td><span class="status-badge status-active">Running</span></td>
+                            <td>Midwest DV List (8,500)</td>
+                            <td>8,420</td>
+                            <td>48.2%</td>
+                            <td>1.3%</td>
+                            <td>
+                                <button class="btn btn-ghost"><i class="fa-solid fa-pause"></i></button>
+                                <button class="btn btn-ghost"><i class="fa-solid fa-pen"></i></button>
+                                <button class="btn btn-ghost text-red"><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <strong>Reefer Special Load</strong><br>
+                                <span style="font-size: 0.8rem; color: var(--text-secondary);">4 Steps (Drip)</span>
+                            </td>
+                            <td><span class="status-badge status-paused">Paused</span></td>
+                            <td>FL Reefers (500)</td>
+                            <td>450</td>
+                            <td class="text-green">68.8%</td>
+                            <td class="text-green">2.6%</td>
+                            <td>
+                                <button class="btn btn-ghost"><i class="fa-solid fa-play text-green"></i></button>
+                                <button class="btn btn-ghost"><i class="fa-solid fa-pen"></i></button>
+                                <button class="btn btn-ghost text-red"><i class="fa-solid fa-trash"></i></button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <!-- Modal for Create Campaign -->
+    <div class="modal-overlay" id="campaignModal">
+        <div class="modal-box" style="max-width: 700px;">
+            <div class="modal-header">
+                <h3>Create New Email Sequence</h3>
+                <button class="close-modal"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+            <div class="modal-body" style="max-height: 60vh; overflow-y: auto;">
+                
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; color: var(--text-secondary);">Campaign Name</label>
+                    <input type="text" id="campaignName" class="form-control" placeholder="e.g. Q3 Dedicated Freight Offer" style="width: 100%; padding: 0.8rem; background: var(--border-light); border: 1px solid var(--border-hover); border-radius: 8px; color: var(--text-primary);">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; color: var(--text-secondary);">Upload Target Leads (Excel/CSV)</label>
+                    <div style="padding: 1rem; background: var(--border-light); border: 1px dashed var(--border-hover); border-radius: 8px; text-align: center; cursor: pointer;" onclick="document.getElementById('excelUpload').click()">
+                        <i class="fa-solid fa-file-excel" style="font-size: 1.5rem; color: var(--text-secondary); margin-bottom: 0.5rem;"></i>
+                        <div id="uploadStatusText" style="color: var(--text-secondary); font-size: 0.9rem;">Click to upload Excel or CSV file</div>
+                        <input type="file" id="excelUpload" accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" style="display: none;">
+                    </div>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; color: var(--text-secondary);">Select Sending Accounts</label>
+                    <div id="accountChipsArea" style="display: flex; flex-wrap: wrap; gap: 0.5rem; padding: 0.8rem; background: var(--border-light); border: 1px solid var(--border-hover); border-radius: 8px; min-height: 80px;">
+                        <!-- Chips will populate here -->
+                        <span style="color: var(--text-secondary); font-size: 0.9rem; align-self: center;">Loading accounts...</span>
+                    </div>
+                    <small style="color: var(--accent-primary); display: block; margin-top: 0.5rem;"><i class="fa-solid fa-circle-info"></i> Click an account chip to select/deselect it for parsing.</small>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; color: var(--text-secondary);">Sending Time Gap (Seconds)</label>
+                    <input type="number" id="campaignDelaySeconds" class="form-control" placeholder="e.g. 60" value="60" style="width: 100%; padding: 0.8rem; background: var(--border-light); border: 1px solid var(--border-hover); border-radius: 8px; color: var(--text-primary);">
+                    <small style="color: var(--text-secondary); display: block; margin-top: 0.5rem;">The precise rest time between each email. Overrides minutes constraint.</small>
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; color: var(--text-secondary);">Initial Email Subject</label>
+                    <input type="text" id="campaignSubject" class="form-control" placeholder="Subject line" style="width: 100%; padding: 0.8rem; background: var(--border-light); border: 1px solid var(--border-hover); border-radius: 8px; color: var(--text-primary);">
+                </div>
+
+                <div class="form-group" style="margin-bottom: 1.5rem;">
+                    <label style="display: block; margin-bottom: 0.5rem; color: var(--text-secondary);">Email Body (Variables allowed: {{companyName}}, {{state}})</label>
+                    <textarea id="campaignBody" class="form-control" rows="6" placeholder="Hi {{companyName}},\n\nI have a dedicated lane from {{state}}..." style="width: 100%; padding: 0.8rem; background: var(--border-light); border: 1px solid var(--border-hover); border-radius: 8px; color: var(--text-primary); resize: vertical;"></textarea>
+                </div>
+
+                <button class="btn btn-secondary w-100" style="margin-bottom: 1rem;"><i class="fa-solid fa-plus"></i> Add Follow-up Step</button>
+
+            </div>
+            <div class="modal-footer" style="flex-direction: column; align-items: stretch; gap: 1rem;">
+                
+                <!-- Hidden Scheduler Div -->
+                <div id="schedulerDiv" style="display: none; background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 8px; border: 1px solid var(--border-hover);">
+                    <label style="display: block; margin-bottom: 0.5rem; color: var(--text-secondary);">Schedule Start Time</label>
+                    <input type="datetime-local" id="scheduleTime" class="form-control" style="width: 100%; padding: 0.8rem; background: var(--bg-main); border: 1px solid var(--border-light); border-radius: 8px; color: var(--text-primary); margin-bottom: 0.5rem;">
+                    <button class="btn btn-primary w-100" id="confirmScheduleBtn">Confirm Schedule</button>
+                </div>
+
+                <div style="display: flex; justify-content: flex-end; gap: 1rem;">
+                    <button class="btn btn-ghost close-modal-btn">Cancel</button>
+                    <button class="btn btn-secondary" id="openScheduleBtn"><i class="fa-solid fa-calendar"></i> Schedule</button>
+                    <button class="btn btn-primary" id="sendNowBtn">Send Now <i class="fa-solid fa-paper-plane"></i></button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/dashboard.js"></script>
+    <script src="js/theme.js"></script>
+    <script src="js/cursor.js"></script>
+</body>
+</html>
